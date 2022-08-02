@@ -1,0 +1,18 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "arrow-parens": [
+      "error",
+      "always"
+    ]
+  },
+  "env": {
+    "jest": true
+  }
+}
