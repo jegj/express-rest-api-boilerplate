@@ -21,7 +21,8 @@
     "production": "NODE_ENV=production node ./bin/www",
     "test": "exit 0",
     "test-fake": "npm run create-sqlite-db; cross-env NODE_ENV=testing jest --coverage; npm run drop-sqlite-db",
-    "test-ci": "jest --coverage --forceExit"
+    "test-ci": "jest --coverage --forceExit",
+    "prepare": "husky install"
   },
   "jest": {
     "globals": {
