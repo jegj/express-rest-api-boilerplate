@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const errorHandler = require('../lib/errorHandler');
 // Routers
-const todosRouter = require('./todos/router');
+const todosRouter = require('./todos/todoRouter');
 
 const app = express();
 
@@ -26,13 +26,16 @@ app.use(helmet({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Error handling middleware, we delegate the handling to the centralized error handler
-app.use(async (err, _req, res) => {
-  await errorHandler.handleError(err, res);
-});
-
 // secure your private routes with jwt authentication middleware
 // app.all('/private/*', (req, res, next) => auth(req, res, next));
 app.use('/todos', todosRouter);
+
+// Error handling middleware, we delegate the handling to the centralized error handler
+// eslint-disable-next-line no-unused-vars
+app.use(async (err, req, res, next) => {
+  // TODO: Better respond codes
+  await errorHandler.handleError(err, res);
+  res.sendStatus(503);
+});
 
 module.exports = app;
