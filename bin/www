@@ -4,6 +4,7 @@ require('dotenv').config();
 const http = require('http');
 const app = require('../api');
 const { logger } = require('../lib/logger');
+const errorHandler = require('../lib/errorHandler');
 
 const port = process.env.PORT ?? 3000;
 const environment = process.env.NODE_ENV ?? 'development';
@@ -50,9 +51,15 @@ server.on('listening', () => {
   logger.debug(`Listening on ${bind}`);
 });
 
-process.on('uncaughtException', (err) => {
-  logger.error('Unexpected Error:', err);
-  process.exit(1);
+process.on('uncaughtException', (error) => {
+  errorHandler.handleError(error);
+  if (!errorHandler.handler.isTrustedError(error)) {
+    process.exit(1);
+  }
+});
+
+process.on('unhandledRejection', (reason) => {
+  errorHandler.handleError(reason);
 });
 
 if (environment !== 'testing') {
