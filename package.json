@@ -13,15 +13,11 @@
   },
   "scripts": {
     "start": "NODE_ENV=development nodemon ./bin/www",
-    "create-sqlite-db": "shx touch ./db/database.sqlite",
-    "drop-sqlite-db": "shx rm ./db/database.sqlite",
     "lint": "eslint ./api/. ./bin/www",
     "prepush": "npm test",
     "pretest": "npm run lint",
     "production": "NODE_ENV=production node ./bin/www",
-    "test": "exit 0",
-    "test-fake": "npm run create-sqlite-db; cross-env NODE_ENV=testing jest --coverage; npm run drop-sqlite-db",
-    "test-ci": "jest --coverage --forceExit",
+    "test": "NODE_ENV=testing jest test --coverage",
     "prepare": "husky install"
   },
   "jest": {

@@ -1,7 +1,7 @@
 /* api/todos/router.js */
 const express = require('express');
 
-const todoController = require('./todoController');
+const todoController = require('./todosController');
 const { logger } = require('../../lib/logger');
 
 const router = express.Router();
