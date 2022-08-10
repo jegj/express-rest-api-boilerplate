@@ -18,7 +18,7 @@
     "pretest": "npm run lint",
     "production": "NODE_ENV=production node ./bin/www",
     "test": "NODE_ENV=testing jest test --coverage",
-    "prepare": "husky install"
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
   },
   "jest": {
     "globals": {
@@ -30,6 +30,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-standard": "^17.0.0",
