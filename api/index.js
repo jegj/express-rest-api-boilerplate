@@ -1,6 +1,5 @@
 /* api/index.js */
 
-const bodyParser = require('body-parser');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -22,9 +21,8 @@ app.use(helmet({
   ieNoOpen: false
 }));
 
-// parsing the request bodys
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// parsing the request body
+app.use(express.json());
 
 // secure your private routes with jwt authentication middleware
 // app.all('/private/*', (req, res, next) => auth(req, res, next));
