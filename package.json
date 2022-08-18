@@ -13,21 +13,15 @@
   },
   "scripts": {
     "start": "NODE_ENV=development nodemon ./bin/www",
-    "lint": "eslint ./api/. ./bin/www",
+    "lint": "npm run lint:standard && npm run lint:markdown",
+    "lint:fix": "standard --fix",
+    "lint:markdown": "markdownlint-cli2",
+    "lint:standard": "standard | snazzy",
     "prepush": "npm test",
     "pretest": "npm run lint",
     "production": "NODE_ENV=production node ./bin/www",
-    "test": "NODE_ENV=testing jest test --coverage",
+    "unit": "tap",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
-  },
-  "jest": {
-    "globals": {
-      "__DEV__": true
-    },
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
@@ -42,6 +36,8 @@
     "eslint-plugin-standard": "^5.0.0",
     "husky": "^8.0.1",
     "nodemon": "^2.0.19",
+    "snazzy": "^9.0.0",
+    "standard": "^17.0.0",
     "supertest": "^6.2.4",
     "tap": "^16.3.0"
   },
