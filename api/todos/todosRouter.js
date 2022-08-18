@@ -1,17 +1,17 @@
 /* api/todos/router.js */
-const express = require('express');
+const express = require('express')
 
-const todoController = require('./todosController');
-const { logger } = require('../../lib/logger');
+const todoController = require('./todosController')
+const { logger } = require('../../lib/logger')
 
-const router = express.Router();
+const router = express.Router()
 
 // middleware that is specific to this router
 router.use((_req, _res, next) => {
-  logger.log('Todo middlewate time: ', Date.now());
-  next();
-});
+  logger.log('Todo middlewate time: ', Date.now())
+  next()
+})
 
-router.get('/', todoController.list);
+router.get('/', todoController.list)
 
-module.exports = router;
+module.exports = router
