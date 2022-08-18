@@ -20,6 +20,7 @@
     "prepush": "npm test",
     "pretest": "npm run lint",
     "production": "NODE_ENV=production node ./bin/www",
+    "test": "npm run unit",
     "unit": "tap",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
   },
