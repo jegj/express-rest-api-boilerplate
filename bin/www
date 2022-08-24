@@ -1,74 +1,74 @@
 #!/usr/bin/env node
-require('dotenv').config();
+require('dotenv').config()
 
-const http = require('http');
-const app = require('../api');
-const { logger } = require('../lib/logger');
-const errorHandler = require('../lib/errorHandler');
+const http = require('http')
+const app = require('../api')
+const { logger } = require('../lib/logger')
+const errorHandler = require('../lib/errorHandler')
 
-const port = process.env.PORT ?? 3000;
-const environment = process.env.NODE_ENV ?? 'development';
-app.set('port', port);
+const port = process.env.PORT ?? 3000
+const environment = process.env.NODE_ENV ?? 'development'
+app.set('port', port)
 
-const server = http.createServer(app);
+const server = http.createServer(app)
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port, () => {
-  if (environment !== 'production'
-    && environment !== 'development'
-    && environment !== 'testing') {
-    logger.error(`NODE_ENV is set to ${environment}, but only production and development are valid.`);
-    process.exit(1);
+  if (environment !== 'production' &&
+    environment !== 'development' &&
+    environment !== 'testing') {
+    logger.error(`NODE_ENV is set to ${environment}, but only production and development are valid.`)
+    process.exit(1)
   }
-});
+})
 
 server.on('error', (error) => {
   if (error.syscall !== 'listen') {
-    throw error;
+    throw error
   }
 
-  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
+  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      logger.error(`${bind} requires elevated privileges`);
-      break;
+      logger.error(`${bind} requires elevated privileges`)
+      break
     case 'EADDRINUSE':
-      logger.error(`${bind} is already in use`);
-      break;
+      logger.error(`${bind} is already in use`)
+      break
     default:
-      throw error;
+      throw error
   }
-  process.exit(1);
-});
+  process.exit(1)
+})
 
 server.on('listening', () => {
-  const addr = server.address();
-  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
-  logger.debug(`Listening on ${bind}`);
-});
+  const addr = server.address()
+  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`
+  logger.debug(`Listening on ${bind}`)
+})
 
 process.on('uncaughtException', (error) => {
-  errorHandler.handleError(error);
+  errorHandler.handleError(error)
   if (!errorHandler.handler.isTrustedError(error)) {
-    process.exit(1);
+    process.exit(1)
   }
-});
+})
 
 process.on('unhandledRejection', (reason) => {
-  errorHandler.handleError(reason);
-});
+  errorHandler.handleError(reason)
+})
 
 if (environment !== 'testing') {
   // Graceful-shutdown only in production or staging
   process.on('SIGINT', () => {
-    logger.info('SIGINT signal received.');
+    logger.info('SIGINT signal received.')
     server.close(() => {
-      logger.info('server closed...');
-      process.exit(0);
-    });
-  });
+      logger.info('server closed...')
+      process.exit(0)
+    })
+  })
 }
